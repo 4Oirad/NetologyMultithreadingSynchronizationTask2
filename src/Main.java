@@ -1,13 +1,18 @@
 public class Main {
 
-    public static void main(String[] args) {
+    private final static int WAITING_IN_LINE = 1000;
+
+    public static void main(String[] args) throws InterruptedException {
 
         final CarDealership carDealership = new CarDealership();
-        new Thread(carDealership::sellCar, "Покупатель 1").start();
-        new Thread(carDealership::sellCar, "Покупатель 2").start();
+
+
+        for (int i = 1; i <= 10; i++) {
+            new Thread(carDealership::sellCar, "Покупатель " + i).start();
+            Thread.sleep(WAITING_IN_LINE);
+        }
+        
         new Thread(carDealership::acceptCar).start();
-        new Thread(carDealership::sellCar, "Покупатель 3").start();
-        new Thread(carDealership::acceptCar).start();
-        new Thread(carDealership::acceptCar).start();
+
     }
 }
